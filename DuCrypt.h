@@ -2,6 +2,7 @@
 #define BOTANWRAPPER_H
 
 #include <QObject>
+
 #include "botan.h"
 
 class DuCrypt: public QObject
@@ -71,6 +72,7 @@ public:
 	 * @param Salt The salt value
 	 */
     void setSalt(QString salt);
+
 private:
 	Botan::LibraryInitializer mInit;
     Botan::SecureVector<Botan::byte> mSalt;

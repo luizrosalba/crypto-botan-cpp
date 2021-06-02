@@ -14,27 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         dialog.cpp \
-    registraradmindialog.cpp \
     botan.cpp \
-    DuCrypt.cpp \
-    administrador.cpp \
-    usuario.cpp \
-    mainwindow.cpp \
-    controlusuariosform.cpp
+    DuCrypt.cpp
 
 HEADERS  += dialog.h \
-    registraradmindialog.h \
     botan.h \
-    DuCrypt.h \
-    administrador.h \
-    usuario.h \
-    mainwindow.h \
-    controlusuariosform.h
+    DuCrypt.h
 
-FORMS    += dialog.ui \
-    registraradmindialog.ui \
-    mainwindow.ui \
-    controlusuariosform.ui
+FORMS    += dialog.ui
 
 DISTFILES += \
     Botan.pri
