@@ -5,6 +5,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QCheckBox>
+#include <QDebug>
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -26,6 +27,15 @@ void Dialog::on_buttonBox_accepted()
     DuCrypt k;
     k.setPassword(generaContrasenya());
     k.setSalt(generaContrasenya());
+    Usuario u(-1, ui->usuarioLineEdit->text(), ui->contrasenyaLineEdit->text());
+    qDebug() << k.encrypt(u.nombre());
+    qDebug() << k.encrypt(u.contrasenya());
+
+    qDebug() << k.decrypt(k.encrypt(u.nombre()));
+    qDebug() << k.decrypt(k.encrypt(u.contrasenya()));
+
+
+    /*
     QSqlQuery q;
     Usuario u(-1, ui->usuarioLineEdit->text(), ui->contrasenyaLineEdit->text());
     int cantidad;
@@ -61,7 +71,9 @@ void Dialog::on_buttonBox_accepted()
     } else {
         mTipo = ADMINISTRADOR;
     }
-    accept();
+    */
+
+   // accept();
 }
 
 void Dialog::on_buttonBox_rejected()

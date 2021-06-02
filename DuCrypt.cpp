@@ -11,6 +11,9 @@
 using namespace std;
 using namespace Botan;
 
+
+
+
 DuCrypt::DuCrypt(QObject *parent) : QObject(parent)
 {
     // set the default salt size
@@ -25,6 +28,7 @@ DuCrypt::DuCrypt(QObject *parent) : QObject(parent)
     // set the default password
     mPassword = hash("!@&^jdshUG24!T^!@*&!Y@()&^909+!-@!@#07");
 }
+
 
 QString DuCrypt::hash(QString data)
 {
@@ -88,10 +92,14 @@ QString DuCrypt::encrypt(QString data)
 		SecureVector < byte > mMaster = pbkdf2.derive_key(48,
 				mPassword.toStdString(), &mSalt[0], mSalt.size(),
 				PBKDF2_ITERATIONS).bits_of();
+
 		SymmetricKey mKey = kdf->derive_key(32, mMaster, "salt1");
 		InitializationVector mIV = kdf->derive_key(16, mMaster, "salt2");
+        qDebug() << mMaster ;
+        //qDebug() << mKey;
+        //qDebug() << mIV;
 
-		Pipe pipe(get_cipher("AES-256/CBC/PKCS7", mKey, mIV, ENCRYPTION),
+        Pipe pipe(get_cipher("AES-256/CBC/PKCS7", mKey, mIV, ENCRYPTION),
 				new Base64_Encoder);
         pipe.process_msg(data.toStdString());
 		QString Value = QString::fromStdString(pipe.read_all_as_string(0));
@@ -119,7 +127,7 @@ QString DuCrypt::decrypt(QString data)
 		InitializationVector mIV = kdf->derive_key(16, mMaster, "salt2");
 
 		Pipe pipe(new Base64_Decoder,
-				get_cipher("AES-256/CBC/PKCS7", mKey, mIV, DECRYPTION));
+                get_cipher("AES-256/CBC/PKCS7", mKey, mIV, DECRYPTION));
         pipe.process_msg(data.toStdString());
 		QString Value = QString::fromStdString(pipe.read_all_as_string(0));
 		return Value;
