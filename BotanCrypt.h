@@ -5,11 +5,11 @@
 
 #include "botan.h"
 
-class DuCrypt: public QObject
+class BotanCrypt: public QObject
 {
 	Q_OBJECT
 public:
-    explicit DuCrypt(QObject *parent = nullptr);
+    explicit BotanCrypt(QObject *parent = nullptr);
 
 	/**
 	 * Creates a hash

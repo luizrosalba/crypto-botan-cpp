@@ -1,4 +1,4 @@
-#include "DuCrypt.h"
+#include "BotanCrypt.h"
 #include <QByteArray>
 #include <QDebug>
 #include <fstream>
@@ -11,10 +11,7 @@
 using namespace std;
 using namespace Botan;
 
-
-
-
-DuCrypt::DuCrypt(QObject *parent) : QObject(parent)
+BotanCrypt::BotanCrypt(QObject *parent) : QObject(parent)
 {
     // set the default salt size
 	mSalt.resize(48);
@@ -30,10 +27,10 @@ DuCrypt::DuCrypt(QObject *parent) : QObject(parent)
 }
 
 
-QString DuCrypt::hash(QString data)
+QString BotanCrypt::hash(QString data)
 {
 	try {
-		Pipe pipe(new Hash_Filter("SHA-1"));
+        Pipe pipe(new Hash_Filter("SHA_256"));
         pipe.process_msg(data.toStdString());
 		QString Value = QString::fromStdString(pipe.read_all_as_string(0));
 		return Value;
@@ -42,7 +39,7 @@ QString DuCrypt::hash(QString data)
 	}
 }
 
-QString DuCrypt::hexHash(QString data)
+QString BotanCrypt::hexHash(QString data)
 {
 	try {
 		Pipe pipe(new Hash_Filter("SHA-1"), new Hex_Encoder);
@@ -54,7 +51,7 @@ QString DuCrypt::hexHash(QString data)
 	}
 }
 
-QString DuCrypt::encode(QString data)
+QString BotanCrypt::encode(QString data)
 {
 	try {
 		Pipe pipe(new Base64_Encoder);
@@ -66,7 +63,7 @@ QString DuCrypt::encode(QString data)
 	}
 }
 
-QString DuCrypt::decode(QString data)
+QString BotanCrypt::decode(QString data)
 {
 	try {
 		Pipe pipe(new Base64_Decoder);
@@ -79,7 +76,7 @@ QString DuCrypt::decode(QString data)
 }
 
 
-QString DuCrypt::encrypt(QString data)
+QString BotanCrypt::encrypt(QString data)
 {
 	try {
         // setup the key derive functions
@@ -113,7 +110,7 @@ QString DuCrypt::encrypt(QString data)
 	}
 }
 
-QString DuCrypt::decrypt(QString data)
+QString BotanCrypt::decrypt(QString data)
 {
 	try {
         // setup the key derive functions
@@ -140,7 +137,7 @@ QString DuCrypt::decrypt(QString data)
 	}
 }
 
-bool DuCrypt::encryptFile(QString source, QString destination)
+bool BotanCrypt::encryptFile(QString source, QString destination)
 {
 	try {
         // setup the key derive functions
@@ -178,7 +175,7 @@ bool DuCrypt::encryptFile(QString source, QString destination)
 	}
 }
 
-bool DuCrypt::decryptFile(QString source, QString destination)
+bool BotanCrypt::decryptFile(QString source, QString destination)
 {
 	try {
         // setup the key derive functions
@@ -216,13 +213,13 @@ bool DuCrypt::decryptFile(QString source, QString destination)
 	}
 }
 
-void DuCrypt::setPassword(QString password)
+void BotanCrypt::setPassword(QString password)
 {
     // set the password
     mPassword = password;
 }
 
-void DuCrypt::setSalt(QString salt)
+void BotanCrypt::setSalt(QString salt)
 {
     QByteArray cBytes = salt.toLatin1();
     const unsigned saltSize = mSalt.size();

@@ -13,13 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    BotanCrypt.cpp \
         dialog.cpp \
-    botan.cpp \
-    DuCrypt.cpp
+    botan.cpp
 
 HEADERS  += dialog.h \
-    botan.h \
-    DuCrypt.h
+    BotanCrypt.h \
+    botan.h
 
 FORMS    += dialog.ui
 
